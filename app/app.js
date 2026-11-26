@@ -361,7 +361,6 @@ function viewGoals() {
         <label>Tambah setoran (Rp)<input type="number" class="goal-amount" min="10000" step="10000" placeholder="100000" required></label>
         <button class="btn btn-primary" type="submit">+ Tambah ke tabungan</button>
       </form>
-      <p class="muted goal-msg" role="status"></p>
     </section>`;
   }).join('')}
   </div>`;
@@ -372,8 +371,7 @@ function viewGoals() {
     if (goal && amount > 0) {
       goal.saved += amount;
       save();
-      form.querySelector('.goal-msg').textContent = 'Setoran ' + formatRp(amount) + ' ditambahkan.';
-      render();
+      render(); // bilah dan persentase langsung diperbarui
     }
   }));
 }

@@ -130,13 +130,21 @@ export function drawLine(canvas, points, opts) {
   const xs = points.map((_, i) => padL + ((w - padL - padR) * i) / Math.max(1, points.length - 1));
   const ys = points.map((p) => padT + ((h - padT - padB) * (1 - (p.value - min) / span)));
   ctx.strokeStyle = o.color;
-  ctx.lineWidth = 2.5;
+  ctx.lineWidth = 3.5;
   ctx.beginPath();
   xs.forEach((x, i) => (i === 0 ? ctx.moveTo(x, ys[i]) : ctx.lineTo(x, ys[i])));
   ctx.stroke();
+  // Isi area di bawah garis supaya grafik terbaca jelas di tangkapan layar.
+  ctx.lineTo(xs[xs.length - 1], h - padB);
+  ctx.lineTo(xs[0], h - padB);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(37, 99, 235, 0.10)';
+  ctx.fill();
   points.forEach((p, i) => {
     ctx.fillStyle = o.color;
-    ctx.beginPath(); ctx.arc(xs[i], ys[i], 4, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(xs[i], ys[i], 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(xs[i], ys[i], 2.5, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#1f2937';
     clampLabel(ctx, p.label, xs[i], h - padB + 12, w, 'center');
   });
